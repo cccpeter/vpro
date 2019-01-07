@@ -1,0 +1,27 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>生命周期的钩子函数</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <a v-bind:href="baidu.com">123</a>
+        <a :href="baidu.com">简写</a>
+        <a v-on:click="do()">123</a>
+        <a @click="do()">简写</a>
+    </body>
+    <script>
+        //created实例创建的钩子函数如 mounted、updated 和 destroyed。生命周期钩子的 this 上下文指向调用它的 Vue 实例。
+        new Vue({
+            data:{
+                a:1
+            },
+            created:function() {
+                console.log('a 被创建了'+this.a)
+            },
+        });
+    </script>
+    </html>

@@ -1,0 +1,39 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <style>
+        .fade-enter-active, .fade-leave-active{
+            transition:opacity .5s;
+        }
+        .fade-enter, .fade-leave-to{
+            opacity: 0;
+        }
+    </style>
+    <title>过渡动画</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <div id="demo">
+            <button v-on:click="show=!show">
+                show&noshow
+            </button>
+            <!-- transition为vue内置的封装组件 -->
+            <transition name="fade">
+                <p v-if="show"> hehe</p>
+            </transition>
+        </div>
+    </body>
+    <script>
+        new Vue({
+            el:'#demo',
+            data:{
+                show:true
+            }
+        })
+        // 具体的过渡和动画看文档中的css
+
+    </script>
+    </html>

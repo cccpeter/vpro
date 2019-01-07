@@ -1,0 +1,140 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>列表渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <ul id="example-1">
+            <li v-for="item in items">
+                <!---item是子节点。items是大集，可以迭代数组和对象数组-->
+                {{item.message}}
+            </li>
+        </ul>
+        <div id="cai1">
+            <!---可选3个值进行显示,最好给定key :key="value.id"-->
+            <div v-for="(value, key,index) in object">
+                {{index}}:{{key}}:{{value}}
+            </div>
+            <li v-for="n in evenNumbers">{{ n }}</li>
+        </div>
+        <!---todolist的例子-->
+        <div id="todo-list-example">
+            <form v-on:submit.prevent="addNewTodo">
+                <label for="new-todo">add a todo</label>
+                <input
+                    v-model="newTodoText"
+                    id="new-todo"
+                    placeholder="feed the cat"
+                >
+                <button>add</button>
+            </form>
+            <ul>
+                <li
+                is="todo-item"
+                v-for="(todo,index) in todos"
+                v-bind:key="todo.id"
+                v-bind:title="todo.title"
+                v-on:remove="todos.splice(index,1)"
+                ></li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        var example1=new Vue({
+            el:'#example-1',
+            data:{
+                items:[
+                    {message:'foo'},
+                    {message:'bar'}
+                ]
+            }
+        }) 
+        //为当前的数组添加数据
+        example1.items.push({ message: 'Baz' })
+        /**
+         * 变异方法 (mutation method)，顾名思义，会改变
+         * 被这些方法调用的原始数组。相比之下，也有
+         * 非变异 (non-mutating method) 方法，例如：filter(),
+         *  concat() 和 slice() 。这些不会改变原始数
+         * 组，但总是返回一个新数组。当使用非变异方法时，可以用新数组替换旧数组：
+         *         */
+        //不是很懂！！！！！！！！！！！！！！！！！！！！！！！#########
+        var arr=["bar","foo","345"];
+        for(var i=0;i<arr.length;i++){
+            console.log(arr[i]);
+            example1.items = example1.items.filter(function (item) {
+                return item.message.match("foo")
+            })
+        }
+        //注意，for不能渲染根目录的节点
+        var cai1=new Vue({
+            el:'#cai1',
+            data:{
+                object:{
+                    caicai1:'cpeter5',
+                    caicai2:'cpeter4',
+                    caicai3:'cpeter3',
+                    caicai4:'cpeter2'
+                },
+                numbers: [ 1, 2, 3, 4, 5 ]
+            },
+            computed: {
+                evenNumbers:function(){
+                    return this.numbers.filter(function (number){
+                        return number %2==0
+                        //用计算属性方法，方法一个过滤
+                    })
+                }
+            },
+        })
+        //根据索引直接更改数据中数组的值
+        Vue.set(cai1.object,'caicai1',"cai");
+        // 一个v-for的组件
+        Vue.component('todo-item',{
+            template: '\
+                    <li>\
+                    {{ title }}\
+                    <button v-on:click="$emit(\'remove\')">Remove</button>\
+                    </li>\
+                ',
+            props:['title']
+        })
+        new Vue({
+            el:"#todo-list-example",
+            data:{
+                newTodoText:'',
+                todos:[
+                    {
+                        id:1,
+                        title:'caicai1',
+                    },{
+                        id:2,
+                        title:'caicai2',
+                    },
+                    {
+                        id:3,
+                        title:'caicai3',
+                    },
+                    {
+                        id:4,
+                        title:'caicai4',
+                    }
+                ],
+                nextTodoId:5,
+            },
+            methods: {
+                addNewTodo:function(){
+                    this.todos.push({
+                        id:this.nextTodoId++,
+                        title:this.newTodoText
+                    })
+                    this.newTodoText=''
+                }
+            },
+        })
+    </script>
+    </html>

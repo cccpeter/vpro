@@ -1,0 +1,69 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>prop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <div id="demo1">
+            <blog-post v-bind:post-title="title"></blog-post>
+        </div>
+        <div id="demo">
+            <my-component v-bind:postt="testdata"></my-component>
+        </div>
+    </body>
+    <script>
+        Vue.component('blog-post',{
+            props:['postTitle'],
+            template:'<h3>{{postTitle}}</h3>'
+        })
+        new Vue({
+            el:'#demo1',
+            data:{
+                title:{
+                    id:1,
+                    title:'12'
+                }
+            }
+        })
+        //props组件的数据验证
+        Vue.component('my-component',{
+            props:{
+                //类型检查('null'匹配任何类型)
+                postt:Number,
+                //多种类型
+                propB:[String,Number],
+                //必填
+                propC:{
+                    type:Number,
+                    default:100
+                },
+                propE:{
+                    type:Object,
+                    //对象或者数组默认值必须从一个工厂函数来获取
+                    default:function(){
+                        return {
+                            message:'hello'
+                        }
+                    }
+                },
+                //自定义验证函数
+                propF:{
+                    validator:function(value){
+                        return ['success','warning','danger'].indexOf(value)!==-1
+                    }
+                }
+            },
+            template:"<h2>{{postt}}</h2>"
+        });
+        new Vue({
+            el:'#demo',
+            data:{
+                testdata:1243
+            }
+        })
+    </script>
+    </html>

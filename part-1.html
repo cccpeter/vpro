@@ -1,0 +1,123 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>v</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+    <div id="app-3">
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+    <div id="app-5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">my message</button>
+    </div>
+    <div id="app-6">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
+    <div id="app-7">
+        <ol>
+            <!-- 创建一个 todo-item 组件的实例 -->
+            <todo-item
+            v-for="item in groceryList"
+            v-bind:todo="item"
+            v-bind:key="item.id"
+            ></todo-item>
+        </ol>
+    </div>
+    <div id="app">
+        <p>{{ foo }}</p>
+        <!-- 这里的 `foo` 不会更新！ -->
+        <button v-on:click="foo = 'baz'">Change it</button>
+      </div>
+    </body>
+    <script type="text/javascript">
+        var app3=new Vue({
+            el:'#app-3',
+            data:{
+                seen:true
+            }
+        });
+        var app4=new Vue({
+            el:'#app-4',
+            data:{
+                todos:[
+                    {text:'学习0'},
+                    {text:'学习1'},
+                    {text:'学习2'},
+                    {text:'学习3'},
+                ]
+            }
+        })
+        var app5=new Vue({
+            el:'#app-5',
+            data:{
+                message:'my name cpeter'
+            },
+            methods: {
+                reverseMessage:function(){
+                    this.message = this.message.split('').reverse().join('')
+                }
+            },
+        });
+        var app6=new Vue({
+            el:'#app-6',
+            data:{
+                message:'my name cpeter'
+            }
+        })
+        Vue.component('todo-item',{
+            props: ['todo'],
+            template:'<li>{{todo.text}}</li>'
+        });
+        var app7=new Vue({
+            el:'#app-7',
+            data:{
+                groceryList:[
+                    {id:0,text:'cpeter1'},
+                    {id:2,text:'cpeter2'},
+                    {id:3,text:'cpeter3'}
+                ]
+            }
+        })
+        // 我们的数据对象
+        var data = { a: 1 }
+        console.log('data中的a元素'+data.a);
+        // 该对象被加入到一个 Vue 实例中
+        var vm = new Vue({
+        data: data
+        })
+
+        // 获得这个实例上的属性
+        // 返回源数据中对应的字段
+        //vm.a == data.a // => true
+        console.log("viewmodel中的a元素"+vm.a);
+
+        // 设置属性也会影响到原始数据
+        vm.a = 2
+        console.log('vm中的a元素更改对应data中的a元素'+data.a) // => 2
+
+        // ……反之亦然
+        data.a = 3
+        //vm.a // => 3
+        var obj={
+            foo:'bar'
+        }
+        // Object.freeze(obj);将元素冻结，数据响应的绑定就会失效
+        var app=new Vue({
+            el:'#app',
+            data:obj
+        })
+    </script>
+</html>

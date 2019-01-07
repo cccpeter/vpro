@@ -1,0 +1,32 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>组件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        
+    </body>
+    <script>
+        // 1、组件的局部注册和全局注册Vue.component('组件名',function(){...});
+        //局部注册
+        var ComponentA={
+
+        };
+        var ComponentB={};
+        var ComponentC={};
+        //在vue中进行绑定组件
+        new Vue({
+            el:'#app',
+            component:{
+                'component-a':ComponentA,
+                'component-b':ComponentB,
+                'component-c':ComponentC
+            }
+        })
+        //暂时跳过-》深入了解组件-》组件注册-》模块系统
+    </script>
+</html>

@@ -1,0 +1,96 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>组件基础</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <div id="components-demo">
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        </div>
+        <div id="blog">
+            <!-- <blog-post title="My journey with Vue"></blog-post>
+            <blog-post title="Blogging with Vue"></blog-post>
+            <blog-post title="Why Vue is so fun"></blog-post> -->
+            <blog-post
+                v-for="post in posts"
+                v-bind:key="post.id"
+                v-bind:title="post.title"
+                v-bind:id="post.id"
+                ></blog-post>
+        </div>
+        <div id="blog1">
+            <blog-post1
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:post="post" 
+            ></blog-post1>
+        </div>
+    </body>
+    <script>
+        //创建一个博文组件升级版
+        Vue.component('blog-post1',{
+            props:['post'],
+            template:'<div class="blog-post"><h3>{{post.title}}</h3><div v-html="post.content"></div></div>'
+        })
+        new Vue({
+            el:'#blog1',
+            data:{
+                posts:[
+                    {id:1,title:'caicai1',content:'123'},
+                    {id:2,title:'caicai2',content:'123'},
+                    {id:3,title:'caicai3',content:'123'},
+                    {id:4,title:'caicai4',content:'123'}
+                ]
+            }
+        })
+        //创建一个博文组件0
+        Vue.component('blog-post',{
+            props:['title','id'],//使用props，接受一个绑定的属性值，相当于data
+            template:'<h3>{{id}}:{{title}}</h3>'
+        })
+        var vm=new Vue({
+            el:'#blog',
+            data:{
+                posts:[
+                    {id:1,title:'my jon'},
+                    {id:2,title:'my jon'},
+                    {id:3,title:'my jon'}
+                ]
+            }
+        })
+        //定义一个button-counter组件
+        /**
+         *当我们定义这个 <button-counter> 组件时，
+          你可能会发现它的 data 并不是像这样直接提供一个对象：
+        data: {
+            count: 0
+        }
+        取而代之的是，一个组件的 data 选项
+        必须是一个函数，因此每个实例可以维护
+        一份被返回对象的独立的拷贝： 
+        每个组件都是被复用了
+         */
+        Vue.component('button-counter',{
+            data:function(){
+                //data在组件中必须是一个函数，带返回方法
+                return{
+                    count:0
+                }
+            },
+            template:'<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
+        new Vue({
+            el:'#components-demo',
+            data:{
+                count:1
+            }
+        })
+        
+    </script>
+    </html>

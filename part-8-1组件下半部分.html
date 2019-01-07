@@ -1,0 +1,60 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>组件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+    <div id="blog-posts-events-demo">
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:post="post"
+            v-on:enlarge-text="add"
+            ></blog-post>
+        </div>
+    </div>
+    </body>
+    <script>
+
+        //0、通过事件向父级组件发送消息，不会
+        //组件基础-》通过事件向户籍组件发送消息
+        //注意组件的注册要在节点注册之前面
+        //$emit方法为vue本身自带方法，可用于触发父级的事件方法
+        //升级版为当前版，用$emit加参数进行传参数
+        Vue.component('blog-post', {
+            props: ['post'],
+            template: `
+                <div class="blog-post">
+                <h3>{{ post.title }}</h3>
+                <button v-on:click="$emit('enlarge-text',0.1)">
+                    Enlarge text
+                </button>
+                <div v-html="post.content"></div>
+                </div>
+            `
+        })
+        new Vue({
+            el: '#blog-posts-events-demo',
+            data: {
+                posts: [
+                    {id:1,title:'caicai1',content:'123'},
+                    {id:2,title:'caicai2',content:'123'},
+                    {id:3,title:'caicai3',content:'123'},
+                    {id:4,title:'caicai4',content:'123'}
+                ],
+                postFontSize: 1
+            },
+            methods: {
+                add:function(event){
+                    this.postFontSize+=event;
+                }
+            },
+        })
+        
+    </script>
+    </html>

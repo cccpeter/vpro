@@ -1,0 +1,42 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>jsx</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <div id="demo1">
+                <anchored-heading :level="le">Hello world!</anchored-heading>
+        </div>
+    </body>
+
+    <script>
+        Vue.component('anchored-heading', {
+            render: function (createElement) {
+                return createElement(
+                'h' + this.level,   // 标签名称
+                this.$slots.default // 子元素数组
+                )
+                // render: function (createElement) {
+                //   return createElement('h1', this.blogTitle)
+                // }
+            },
+            props: {
+                level: {
+                type: Number,
+                required: true
+                }
+            }
+        })
+
+        new Vue({
+            el:'#demo1',
+            data:{
+                le:1
+            }
+        })
+    </script>
+    </html>

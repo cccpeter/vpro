@@ -1,0 +1,59 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>class和style的绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <div class="static"
+            v-bind:class="{active:isActive,'text-danger':hasError}">123
+        </div>
+        <div id="caicai" v-bind:class="static1">234
+        </div>
+        <!--数组绑定class-->
+        <div id="cai1" v-bind:class="[act1,act2,cai1]">
+            345
+        </div>
+        <div id="cai2" v-bind:style="caicai">456</div>
+    </body>
+    <script>
+        var vm=new Vue({
+            el:'.static',
+            data:{
+                isActive:true,
+                hasError:true
+            }
+        })
+       //采用外联方式
+       var vm=new Vue({
+           el:'#caicai',
+            data:{
+                static1:{
+                    active:true,
+                    'hastezt':true
+                }
+            }
+        })
+        var vm=new Vue({
+            el:'#cai1',
+            data:{
+                act1:'caiclass1',
+                act2:"caiclass2",
+                cai1:"caiclass3"
+            }
+        })
+        // 绑定样式
+        var vm=new Vue({
+            el:'#cai2',
+            data:{
+                caicai:{
+                    'color':'red',
+                    'font-size':'25px'
+                }
+            }
+        })
+    </script>
+    </html>

@@ -1,0 +1,81 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>条件渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <body>
+        <div id="caicai">
+            <template v-if="istemplate">
+                <h1>Title</h1>
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+            </template>
+            <div v-if="Math.random() > 0.5">
+                可见
+            </div>
+            <div v-else>
+                不可见
+            </div>
+            <div v-if="type === 'A'">
+            A
+            </div>
+            <div v-else-if="type === 'B'">
+            B
+            </div>
+            <div v-else-if="type === 'C'">
+            C
+            </div>
+            <div v-else>
+            Not A/B/C
+            </div>
+        </div>
+        <div id="caicai1">
+            <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username-input">
+            </template>
+            <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address" key="email-input">
+            </template>
+            <input type="button" v-on:click="caicaiclick" value="切换">
+            <!--如果想要复用input框则将key去掉，vue会自动复用input框，里面输入的值不会被清除掉-->
+        </div>
+        <div id="caicai2" v-show="caishow">124124</div>
+    </body>
+    <script>
+        // 任何东西都需要用vue渲染一下
+       var vm=new Vue({
+           el:'#caicai',
+           data:{
+               type:'B',
+               istemplate:true
+           }
+       })
+       var vm=new Vue({
+           el:'#caicai1',
+           data:{
+                loginType:'username'
+           },
+           methods:{
+               caicaiclick:function(){
+                   if(this.loginType==='username'){
+                       this.loginType='password';
+                   }else{
+                       this.loginType='username';
+                   }
+               }
+           }
+       })
+       var vm=new Vue({
+            el:'#caicai2',
+            data:{
+                caishow:true    
+            }
+       })
+    </script>
+    </html>
